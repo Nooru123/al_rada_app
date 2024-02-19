@@ -23,8 +23,84 @@ List<Map<String,dynamic>> specialOfferModel =[
     "price":'350'
   },
   {
-    "photo":"assets/sp5.png",
+    "photo":"assets/sp5 1.png",
     "name":"Grilled chicken",
     "price":'350'
   },
+];
+List<Map<String,dynamic>> sidesModel =[
+{
+"photo":"assets/french-fries 1.png",
+"name":"French Fries",
+"price":'79.0'
+},
+{
+"photo":"assets/dip1 2.png",
+"name":"Coleslaw",
+"price":'49.0'
+},
+{
+"photo":"assets/hummus 1.png",
+"name":"Hummus",
+"price":'49.0'
+},
+{
+"photo":"assets/ketchup 1.png",
+"name":"Ketchup",
+"price":'100.0'
+},
+{
+"photo":"assets/pesto-dip 1.png",
+"name":"Pesto",
+"price":'150.0'
+},
+{
+"photo":"assets/mayo 1.png",
+"name":"Mayo",
+"price":'120.0'
+},
+];
+List<Map<String,dynamic>> breadsModel =[
+{
+"photo":"assets/bun 1.png",
+"name":"Bun",
+"price":'5.0'
+},
+{
+"photo":"assets/kuboose 1.png",
+"name":"Kuboos",
+"price":'8.0'
+},
+{
+"photo":"assets/garlic-bread-min 1.png",
+"name":"Garlic Bread",
+"price":'20.0'
+},
+{
+"photo":"assets/buttur-rotti-min 1.png",
+"name":"Butter Bread",
+"price":'30.0'
+},
+];
+List<Map<String,dynamic>> drinksModel =[
+{
+"photo":"assets/cocacola-8 1.png",
+"name":"Coca Cola",
+"price":'40.0'
+},
+{
+"photo":"assets/drinks1 1.png",
+"name":"Mockup Can",
+"price":'40.0'
+},
+{
+"photo":"assets/drinks2 1.png",
+"name":"Lemonade",
+"price":'50.0'
+},
+{
+"photo":"assets/drinks5 1.png",
+"name":"Xtreme Soda",
+"price":'50.0'
+},
 ];

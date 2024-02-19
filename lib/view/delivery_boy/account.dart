@@ -223,17 +223,21 @@ class Account extends StatelessWidget {
               SizedBox(
                 height: height / 28,
               ),
-              Container(
-                alignment: Alignment.center,
-                height: height / 16,
-                width: width,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.white),
-                    color: Colors.black),
-                child: const Text(
-                  "Update",
-                  style: TextStyle(color: Colors.white, fontSize: 22),
+              InkWell(onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>const DlvHome()));
+              },
+                child: Container(
+                  alignment: Alignment.center,
+                  height: height / 16,
+                  width: width,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.white),
+                      color: Colors.black),
+                  child: const Text(
+                    "Update",
+                    style: TextStyle(color: Colors.white, fontSize: 22),
+                  ),
                 ),
               ),
             ],

@@ -1,3 +1,6 @@
+import 'package:ai_rida/view/customer/breads.dart';
+import 'package:ai_rida/view/customer/drinks.dart';
+import 'package:ai_rida/view/customer/sides.dart';
 import 'package:ai_rida/view/customer/special_offer.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/material.dart';
@@ -37,20 +40,20 @@ class Menu extends StatelessWidget {
                 dividerColor: Colors.transparent,
 
                 tabs: [
-                Tab( child: Text("Special offer",style: GoogleFonts.poppins(fontSize: 12,fontWeight: FontWeight.w500),),),
-                Tab( child: Text("Sides",style: GoogleFonts.poppins(fontSize: 15,fontWeight: FontWeight.w500),),),
-                  Tab( child: Text("Breads",style: GoogleFonts.poppins(fontSize: 15,fontWeight: FontWeight.w500),),),
-                  Tab( child: Text("Drinks",style: GoogleFonts.poppins(fontSize: 15,fontWeight: FontWeight.w500),),),
+                Tab( child: Text("Special offer",style: GoogleFonts.poppins(fontSize: 10,fontWeight: FontWeight.w500),),),
+                Tab( child: Text("Sides",style: GoogleFonts.poppins(fontSize: 12,fontWeight: FontWeight.w500),),),
+                  Tab( child: Text("Breads",style: GoogleFonts.poppins(fontSize: 12,fontWeight: FontWeight.w500),),),
+                  Tab( child: Text("Drinks",style: GoogleFonts.poppins(fontSize: 12,fontWeight: FontWeight.w500),),),
 
                   ]),
             ),
             SizedBox(
-              height: height/1.292,
+              height: height/1.32689,
               child: TabBarView(children: [
                 SpecialOffer(),
-                DlvHomeTabView(),
-                DlvHomeTabView(),
-                DlvHomeTabView(),
+                Sides(),
+                Breads(),
+                Drinks(),
 
               ]),
             ),
