@@ -52,6 +52,7 @@ dependencies:
   awesome_dialog: ^3.2.0
   gap: ^3.0.1
   search_bar_animated: ^1.0.2
+  upi_india: ^3.0.1
 
 
 

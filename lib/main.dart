@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<SplashPro>(create: (_) => SplashPro()),
+        ChangeNotifierProvider<PaymentPro>(create: (_) => PaymentPro()),
         ChangeNotifierProvider<DlvPro>(create: (_) => DlvPro()),
         ChangeNotifierProvider<CtmPro>(create: (_) => CtmPro()),
         ChangeNotifierProvider<AccountPro>(create: (_) => AccountPro()),

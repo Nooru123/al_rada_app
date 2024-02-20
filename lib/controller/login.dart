@@ -4,13 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:upi_india/upi_india.dart';
+import 'package:upi_india/upi_response.dart';
 
 import '../model/dlv_model.dart';
 import '../view/customer/ctm_home.dart';
 import '../view/delivery_boy/dlv_home.dart';
-import '../view/delivery_boy/login_page2.dart';
-import '../view/delivery_boy/sign_up2.dart';
+import '../view/login_page2.dart';
+import '../view/sign_up2.dart';
 import '../view/signin_signup.dart';
 import 'backend.dart';
 
@@ -88,10 +91,29 @@ class SplashPro with ChangeNotifier{
     // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LoginPage2(usertype: userType.toString(),)));
     // notifyListeners();
   }
-  void back (context)async{
+  Future<void>login (String userEmail,String userPass,context)async{
     var sharedPref = await SharedPreferences.getInstance();
     sharedPref.setBool(keylogin,true);
-    backendServices.lognin(email1.text, pass1.text,  context);
+      try{
+        await firebaseAuth.signInWithEmailAndPassword(email: userEmail, password: userPass);
+        final user =firebaseAuth.currentUser;
+        final emailVerified = user!.emailVerified;
+        if(emailVerified==false){
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please verified")));
+
+        }else{
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>DlvHome()));
+        }
+
+      }
+      on FirebaseAuthException catch(e){
+        ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(e.toString())));
+      }
+      catch(e){
+        print(e);
+
+      }
+
     notifyListeners();
   }
 
@@ -118,6 +140,20 @@ class SplashPro with ChangeNotifier{
   //   sharedPref.setString(SplashPro.self,"delivery_boy");
   //   notifyListeners();
   // }
+  Future<void> forgotPassword(String userEmail,context)async{
+    try{
+      await firebaseAuth.sendPasswordResetEmail(email: userEmail);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Password reset email send check your inbox")));
+    }
+    on FirebaseAuthException catch(e){
+      ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(e.toString())));
+    }
+    catch(e){
+      print(e);
+
+    }
+    notifyListeners();
+  }
 
 
   Future whereToGo(context) async {
@@ -151,5 +187,135 @@ class SplashPro with ChangeNotifier{
 
     );
   }
-}
+  ////////////////////////////////////////////////////////////////////////////
 
+}
+class PaymentPro with ChangeNotifier{
+  Future<UpiResponse>? transaction;
+  UpiIndia _upiIndia = UpiIndia();
+  List<UpiApp>? apps;
+
+  TextStyle header = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+  );
+
+  TextStyle value = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+  );
+  void allUpi() {
+    _upiIndia.getAllUpiApps(mandatoryTransactionId: false).then((value) {
+
+      apps = value;
+      notifyListeners();
+    }).catchError((e) {
+      apps = [];
+    });
+
+
+  }
+  Future<UpiResponse> initiateTransaction(UpiApp app) async {
+    return _upiIndia.startTransaction(
+      app: app,
+      receiverUpiId: "9078600498@ybl",
+      receiverName: 'Md Azharuddin',
+      transactionRefId: 'TestingUpiIndiaPlugin',
+      transactionNote: 'Not actual. Just an example.',
+      amount: 1.00,
+    );
+  }
+
+  Widget displayUpiApps() {
+    if (apps == null)
+      return Center(child: CircularProgressIndicator());
+    else if (apps!.length == 0)
+      return Center(
+        child: Text(
+          "No apps found to handle transaction.",
+          style: header,
+        ),
+      );
+    else
+      return Align(
+        alignment: Alignment.topCenter,
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Wrap(
+            children: apps!.map<Widget>((UpiApp app) {
+              return GestureDetector(
+                onTap: () {
+                  transaction = initiateTransaction(app);
+
+                },
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image.memory(
+                        app.icon,
+                        height: 60,
+                        width: 60,
+                      ),
+                      Text(app.name),
+                    ],
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      );
+  }
+
+  String upiErrorHandler(error) {
+    switch (error) {
+      case UpiIndiaAppNotInstalledException:
+        return 'Requested app not installed on device';
+      case UpiIndiaUserCancelledException:
+        return 'You cancelled the transaction';
+      case UpiIndiaNullResponseException:
+        return 'Requested app didn\'t return any response';
+      case UpiIndiaInvalidParametersException:
+        return 'Requested app cannot handle the transaction';
+      default:
+        return 'An Unknown error has occurred';
+    }
+  }
+
+  void checkTxnStatus(String status) {
+    switch (status) {
+      case UpiPaymentStatus.SUCCESS:
+        print('Transaction Successful');
+        break;
+      case UpiPaymentStatus.SUBMITTED:
+        print('Transaction Submitted');
+        break;
+      case UpiPaymentStatus.FAILURE:
+        print('Transaction Failed');
+        break;
+      default:
+        print('Received an Unknown transaction status');
+    }
+  }
+
+  Widget displayTransactionData(title, body) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("$title: ", style: header),
+          Flexible(
+              child: Text(
+                body,
+                style:GoogleFonts.poppins(),
+              )),
+        ],
+      ),
+    );
+  }
+}

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../controller/login.dart';
+import '../controller/login.dart';
 
 class SignUp2 extends StatelessWidget {
   final String usertype;

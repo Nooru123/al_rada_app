@@ -1,3 +1,4 @@
+import 'package:ai_rida/view/customer/payment.dart';
 import 'package:ai_rida/view/customer/search_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +12,59 @@ class CardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     var size=MediaQuery.of(context).size;
     return Scaffold (
+      bottomSheet:
+          BottomAppBar(
+              height: size.height/4,color: Colors.grey,
+              child:Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("subtotal",style: GoogleFonts.poppins(fontSize: size.height/40),),
+                      Text("₹ 99.0",style: GoogleFonts.poppins(fontSize: size.height/40),),
+                    ],
+                  ),
+                  Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Total",style: GoogleFonts.poppins(fontSize: size.height/43,fontWeight: FontWeight.bold),),
+                          Text("(including delivery charge &GST)"),
+                        ],
+                      ),
+
+                      Text("₹ 140.0",style: GoogleFonts.poppins(fontSize: size.height/40),),
+                    ],
+                  ),
+                  Gap(size.height/40),
+                  InkWell(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const Payment()));
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: size.height/17,
+                      width: size.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.green.shade700
+                      ),
+                      child: Text("Proceed to checkout",style: GoogleFonts.poppins(fontSize: size.height/40,fontWeight: FontWeight.w500,color: Colors.white),),
+                    ),
+                  )
+
+                ],
+              ) ),
+
+
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(111, 31, 40, 1),
 
-        title: const Text("Card"),
+        title: const Text("Card",style: TextStyle(color: Colors.white),),
         actions: [
           IconButton(
             onPressed: ( ) {
@@ -102,6 +152,7 @@ class CardPage extends StatelessWidget {
                     const Text("- 1 +"),
                   ],
                 ),
+
 
 
 

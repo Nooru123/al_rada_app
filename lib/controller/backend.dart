@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:upi_india/upi_india.dart';
 
 import '../model/dlv_model.dart';
 import '../view/delivery_boy/dlv_home.dart';
-import '../view/delivery_boy/login_page2.dart';
 
 
 class BackendServices {
@@ -86,6 +86,19 @@ class BackendServices {
       print(e);
 
     }
+  }
+  //////////////////////////////////////////////////////////////////////////
+  UpiIndia _upiIndia = UpiIndia();
+  UpiApp app = UpiApp.googlePay;
+  Future<UpiResponse> initiateTransaction(UpiApp app) async {
+    return _upiIndia.startTransaction(
+      app: app,
+      receiverUpiId: "9078600498@ybl",
+      receiverName: 'Md Azharuddin',
+      transactionRefId: 'TestingUpiIndiaPlugin',
+      transactionNote: 'Not actual. Just an example.',
+      amount: 1.00,
+    );
   }
 
 }

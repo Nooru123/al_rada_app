@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
 
@@ -94,12 +96,23 @@ class LoginPage2 extends StatelessWidget {
                       onSaved: (value) {},
                     ),
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: height/60,
+                      ),
+                      TextButton(onPressed: (){
+                        goPro.forgotPassword(goPro.pass1.text, context);
+                      }, child: Text("forgot password?",style: GoogleFonts.poppins(),)),
+                    ],
+                  ),
                   SizedBox(
                     height: height / 23,
                   ),
                   InkWell(
                     onTap: () {
-                      goPro.back(context);
+                      goPro.login(goPro.email1.text, goPro.pass1.text, context);
                     },
                     child: Container(
                       alignment: Alignment.center,
