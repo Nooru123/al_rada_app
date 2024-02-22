@@ -13,21 +13,23 @@ class Payment extends StatelessWidget {
 
     final payment = Provider.of<PaymentPro>(context, listen: false);
 
+    payment.allUpi();
+
 
     return Scaffold(
 
       appBar:AppBar(
         backgroundColor: const Color.fromRGBO(111, 31, 40, 1),
 
-        title: Text("Payment",style: TextStyle(color: Colors.white),),
-        leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: () {
+        title: const Text("Payment",style: TextStyle(color: Colors.white),),
+        leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const CardPage()));
         },),
       ) ,
       body:  Column(
         children: <Widget>[
           Expanded(
-            child: payment.displayUpiApps(),
+            child: payment.displayUpiApps(context),
           ),
           Expanded(
             child: FutureBuilder(
@@ -45,14 +47,14 @@ class Payment extends StatelessWidget {
 
                   // If we have data then definitely we will have UpiResponse.
                   // It cannot be null
-                  UpiResponse _upiResponse = snapshot.data!;
+                  UpiResponse upiResponse = snapshot.data!;
 
                   // Data in UpiResponse can be null. Check before printing
-                  String txnId = _upiResponse.transactionId ?? 'N/A';
-                  String resCode = _upiResponse.responseCode ?? 'N/A';
-                  String txnRef = _upiResponse.transactionRefId ?? 'N/A';
-                  String status = _upiResponse.status ?? 'N/A';
-                  String approvalRef = _upiResponse.approvalRefNo ?? 'N/A';
+                  String txnId = upiResponse.transactionId ?? 'N/A';
+                  String resCode = upiResponse.responseCode ?? 'N/A';
+                  String txnRef = upiResponse.transactionRefId ?? 'N/A';
+                  String status = upiResponse.status ?? 'N/A';
+                  String approvalRef = upiResponse.approvalRefNo ?? 'N/A';
                   payment. checkTxnStatus(status);
 
                   return Padding(
@@ -68,10 +70,11 @@ class Payment extends StatelessWidget {
                       ],
                     ),
                   );
-                } else
-                  return Center(
+                } else {
+                  return const Center(
                     child: Text(''),
                   );
+                }
               },
             ),
           )

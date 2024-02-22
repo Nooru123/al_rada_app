@@ -1,6 +1,7 @@
 import 'package:ai_rida/view/customer/card.dart';
 import 'package:ai_rida/view/customer/ctm_home.dart';
 import 'package:ai_rida/view/customer/favarite.dart';
+import 'package:ai_rida/view/delivery_boy/progress.dart';
 import 'package:ai_rida/view/splash_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const Favorite(),
+        home: const Progress(),
         debugShowCheckedModeBanner: false,
       ),
     );

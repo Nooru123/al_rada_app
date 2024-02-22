@@ -1,5 +1,8 @@
 
 
+
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -7,10 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:upi_india/upi_india.dart';
-import 'package:upi_india/upi_response.dart';
 
 import '../model/dlv_model.dart';
 import '../view/customer/ctm_home.dart';
+import '../view/customer/order_confirmed.dart';
 import '../view/delivery_boy/dlv_home.dart';
 import '../view/login_page2.dart';
 import '../view/sign_up2.dart';
@@ -28,7 +31,7 @@ class SplashPro with ChangeNotifier{
   DlvDtl? _userModel;
   DlvDtl get userModel => _userModel!;
   // var value;
-  static const String keylogin ='login';
+  static const String keyLogin ='login';
   static  String value ='';
   GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -44,7 +47,7 @@ class SplashPro with ChangeNotifier{
   var pass=TextEditingController();
   var pass1=TextEditingController();
   var conPass=TextEditingController();
-  var  userType;
+  dynamic  userType;
   Future<void> fly (context)async{
     var sharedPref= await SharedPreferences.getInstance();
      userType = sharedPref.getString(value);
@@ -72,7 +75,7 @@ class SplashPro with ChangeNotifier{
   Future<void>signUp(String userName,String userPassword,String userEmail,context,String collectionName, )async{
     try{
       var sharedPref = await SharedPreferences.getInstance();
-      sharedPref.setBool(keylogin,true);
+      sharedPref.setBool(keyLogin,true);
       UserCredential userCredential =await firebaseAuth.createUserWithEmailAndPassword(email: userEmail, password: userPassword);
       final user =firebaseAuth.currentUser;
       user!.sendEmailVerification();
@@ -93,7 +96,7 @@ class SplashPro with ChangeNotifier{
   }
   Future<void>login (String userEmail,String userPass,context)async{
     var sharedPref = await SharedPreferences.getInstance();
-    sharedPref.setBool(keylogin,true);
+    sharedPref.setBool(keyLogin,true);
       try{
         await firebaseAuth.signInWithEmailAndPassword(email: userEmail, password: userPass);
         final user =firebaseAuth.currentUser;
@@ -158,7 +161,7 @@ class SplashPro with ChangeNotifier{
 
   Future whereToGo(context) async {
     var sharedPref= await SharedPreferences.getInstance();
-    var isLoggedIn = sharedPref.getBool(keylogin);
+    var isLoggedIn = sharedPref.getBool(keyLogin);
     Future.delayed (const Duration(seconds: 4),() {
 
 
@@ -195,16 +198,17 @@ class PaymentPro with ChangeNotifier{
   UpiIndia _upiIndia = UpiIndia();
   List<UpiApp>? apps;
 
-  TextStyle header = TextStyle(
+  TextStyle header = const TextStyle(
     fontSize: 18,
     fontWeight: FontWeight.bold,
   );
 
-  TextStyle value = TextStyle(
+  TextStyle value = const TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 14,
   );
   void allUpi() {
+
     _upiIndia.getAllUpiApps(mandatoryTransactionId: false).then((value) {
 
       apps = value;
@@ -226,29 +230,30 @@ class PaymentPro with ChangeNotifier{
     );
   }
 
-  Widget displayUpiApps() {
-    if (apps == null)
-      return Center(child: CircularProgressIndicator());
-    else if (apps!.length == 0)
+  Widget displayUpiApps(context) {
+    if (apps == null) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (apps!.isEmpty) {
       return Center(
         child: Text(
           "No apps found to handle transaction.",
           style: header,
         ),
       );
-    else
+    } else{
       return Align(
         alignment: Alignment.topCenter,
         child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           child: Wrap(
             children: apps!.map<Widget>((UpiApp app) {
               return GestureDetector(
+                onLongPress: (){ transaction = initiateTransaction(app);},
                 onTap: () {
-                  transaction = initiateTransaction(app);
+                  Navigator.push(context , MaterialPageRoute(builder: (context)=>const OrderConfirmed()));
 
                 },
-                child: Container(
+                child: SizedBox(
                   height: 100,
                   width: 100,
                   child: Column(
@@ -269,6 +274,7 @@ class PaymentPro with ChangeNotifier{
           ),
         ),
       );
+  }
   }
 
   String upiErrorHandler(error) {

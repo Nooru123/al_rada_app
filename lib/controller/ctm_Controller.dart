@@ -67,7 +67,7 @@ void showAlertDialog(context) {
     btnOkOnPress: ()async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
        await prefs.clear();
-       await prefs.remove(SplashPro.keylogin);
+       await prefs.remove(SplashPro.keyLogin);
        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const SplashScreen()));
 
       // void removeValues() async {

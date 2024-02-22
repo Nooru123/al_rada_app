@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'ctm_home.dart';
+
 class CardPage extends StatelessWidget {
   const CardPage({super.key, });
 
@@ -24,7 +26,7 @@ class CardPage extends StatelessWidget {
                       Text("₹ 99.0",style: GoogleFonts.poppins(fontSize: size.height/40),),
                     ],
                   ),
-                  Divider(),
+                  const Divider(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -33,7 +35,7 @@ class CardPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text("Total",style: GoogleFonts.poppins(fontSize: size.height/43,fontWeight: FontWeight.bold),),
-                          Text("(including delivery charge &GST)"),
+                          const Text("(including delivery charge &GST)"),
                         ],
                       ),
 
@@ -63,6 +65,10 @@ class CardPage extends StatelessWidget {
 
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(111, 31, 40, 1),
+        leading: IconButton(icon: const Icon(CupertinoIcons.arrow_left), onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>const CtmHome()));
+
+        },),
 
         title: const Text("Card",style: TextStyle(color: Colors.white),),
         actions: [
