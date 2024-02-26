@@ -63,7 +63,7 @@ class DlvHome extends StatelessWidget {
               label: 'Wallet'),
         ],
         onTap: (index) {
-          navi.going(index);
+          navi.switchToNext(index);
         },
       ),
     );

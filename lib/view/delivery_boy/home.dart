@@ -65,7 +65,7 @@ class Home extends StatelessWidget {
                         Consumer<HomePro>(
                             builder: (context,value,child) {
                               return FutureBuilder(
-                                  future: value.see(context),
+                                  future: value.offline(context),
                                   builder: (context,snapshot) {
                                     return Switch(
                                       activeColor: Colors.white,
@@ -73,7 +73,7 @@ class Home extends StatelessWidget {
                                       inactiveTrackColor:  const Color.fromRGBO(111, 31, 40, 1),
                                       inactiveThumbColor:  const Color.fromRGBO(11, 1, 0, 1),
                                       value: change.isOn, onChanged: (bool value) {
-                                      change.see(value);
+                                      change.offline(value);
             
                                     },);
                                   }

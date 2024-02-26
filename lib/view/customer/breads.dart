@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solar_icons/solar_icons.dart';
 
-import '../../model/modelmodel.dart';
+import '../../model/model_model.dart';
 
 class Breads extends StatelessWidget {
   const Breads({super.key});
@@ -55,7 +55,7 @@ class Breads extends StatelessWidget {
                           children: [
 
 
-                            Icon(Icons.select_all_outlined,color: Colors.red,),
+                            const Icon(Icons.select_all_outlined,color: Colors.red,),
                             Icon(SolarIconsBold.heart,color: Colors.deepOrange.shade900,)
                           ],
                         ),
@@ -73,8 +73,8 @@ class Breads extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Add"),
-                              Wrap(children:[ Text("₹ "),
+                              const Text("Add"),
+                              Wrap(children:[ const Text("₹ "),
                                 Text(breadsModel[index]['price'])
                               ]),
 

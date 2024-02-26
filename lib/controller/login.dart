@@ -15,10 +15,10 @@ import '../model/dlv_model.dart';
 import '../view/customer/ctm_home.dart';
 import '../view/customer/order_confirmed.dart';
 import '../view/delivery_boy/dlv_home.dart';
-import '../view/login_page2.dart';
-import '../view/sign_up2.dart';
+import '../view/login.dart';
+import '../view/sign_up.dart';
 import '../view/signin_signup.dart';
-import 'backend.dart';
+
 
 
 
@@ -40,7 +40,7 @@ class SplashPro with ChangeNotifier{
 
 
 
-  BackendServices backendServices =BackendServices();
+
   var name=TextEditingController();
   var email1=TextEditingController();
   var email=TextEditingController();
@@ -48,19 +48,19 @@ class SplashPro with ChangeNotifier{
   var pass1=TextEditingController();
   var conPass=TextEditingController();
   dynamic  userType;
-  Future<void> fly (context)async{
+  Future<void> movingToSignUp (context)async{
     var sharedPref= await SharedPreferences.getInstance();
      userType = sharedPref.getString(value);
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUp2(usertype: userType.toString(),)));
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>SignUp(usertype: userType.toString(),)));
 
 
   }
 
-  Future<void> fly1 (context)async{
+  Future<void> movingToLogin (context)async{
 
     var sharedPref= await SharedPreferences.getInstance();
     userType = sharedPref.getString(value);
-    Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage2(usertype: userType.toString(),)));
+    Navigator.push(context, MaterialPageRoute(builder: (context)=>Login(usertype: userType.toString(),)));
 
 
   }
@@ -81,7 +81,7 @@ class SplashPro with ChangeNotifier{
       user!.sendEmailVerification();
       await saveUser(userName, userEmail,collectionName);
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Success")));
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LoginPage2(usertype: userType.toString(),)));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Login(usertype: userType.toString(),)));
       notifyListeners();
 
 

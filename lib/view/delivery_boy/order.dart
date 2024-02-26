@@ -5,8 +5,8 @@ import 'package:hexcolor/hexcolor.dart';
 
 import 'account.dart';
 import 'notifications.dart';
-class Order extends StatelessWidget {
-const Order({super.key});
+class OrderPage extends StatelessWidget {
+const OrderPage({super.key});
 
 @override
 Widget build(BuildContext context) {

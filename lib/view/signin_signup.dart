@@ -34,7 +34,7 @@ class SignInSignUp extends StatelessWidget {
                 children: [
                   InkWell(
                     onTap: () {
-                      login.fly1(context);
+                      login.movingToLogin(context);
                     },
                     child: Container(
                       alignment: Alignment.center,
@@ -50,7 +50,7 @@ class SignInSignUp extends StatelessWidget {
                   InkWell(
                     onLongPress: () {},
                     onTap: () {
-                      login.fly(context);
+                      login.movingToSignUp(context);
                     },
                     child: Container(
                       alignment: Alignment.center,

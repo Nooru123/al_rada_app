@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 
 List<dynamic> specialModel =[
   "assets/img_6.png",

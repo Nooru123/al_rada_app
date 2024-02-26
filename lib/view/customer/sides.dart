@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:solar_icons/solar_icons.dart';
 
-import '../../model/modelmodel.dart';
+import '../../model/model_model.dart';
 class Sides extends StatelessWidget {
   const Sides({super.key});
 

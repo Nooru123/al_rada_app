@@ -53,7 +53,7 @@ dependencies:
   gap: ^3.0.1
   search_bar_animated: ^1.0.2
   upi_india: ^3.0.1
-  google_maps_flutter: ^2.0.10
+  google_maps_flutter: ^2.5.3
 
 
 

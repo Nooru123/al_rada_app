@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 
 import '../controller/login.dart';
 
-class SignUp2 extends StatelessWidget {
+class SignUp extends StatelessWidget {
   final String usertype;
-  const SignUp2({required this.usertype, super.key});
+  const SignUp({required this.usertype, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +188,7 @@ class SignUp2 extends StatelessWidget {
                         const Text("Don’t have a account ?"),
                         TextButton(
                             onPressed: () {
-                              goPro.fly1(context);
+                              goPro.movingToLogin(context);
                             },
                             child: const Text(
                               "Sign In",
