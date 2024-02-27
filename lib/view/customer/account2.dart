@@ -2,15 +2,13 @@ import 'package:ai_rida/view/customer/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:provider/provider.dart';
 
+import '../../controller/accountpro.dart';
 import '../../controller/ctm_Controller.dart';
 import 'favarite.dart';
 import 'order2.dart';
-// import 'package:nooru_project/profile.dart';
 
-// import 'Orders2.dart';
-// import 'controller.dart';
-// import 'favorite.dart';
 class Account2 extends StatelessWidget {
   const Account2({super.key});
 
@@ -18,6 +16,7 @@ class Account2 extends StatelessWidget {
   Widget build(BuildContext context) {
     var height=MediaQuery.of(context).size.height;
     var width=MediaQuery.of(context).size.width;
+    final fetchData = Provider.of<BackendProvider>(context);
     return  Scaffold(
       body: Padding(
         padding:  EdgeInsets.symmetric(horizontal: width/30),
@@ -33,13 +32,18 @@ class Account2 extends StatelessWidget {
             ),
             Padding(
               padding:  EdgeInsets.symmetric(horizontal: width/3),
-              child: Container(
-                height: height/8,
-                width: width/4,
+              child: Consumer<BackendProvider>(
+                builder: (context,value,child) {
+                  return Container(
+                    height: height/8,
+                    width: width/4,
 
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),color: Colors.grey.shade300,
-                ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100),
+                      image: DecorationImage(image: NetworkImage(fetchData.userModel.imageUrl!))
+                    ),
+                  );
+                }
               ),
             ),
             SizedBox(

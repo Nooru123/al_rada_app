@@ -21,10 +21,11 @@ class CtmHome extends StatelessWidget {
       appBar: AppBar(
         title: Text(customer.pages[customer.selectedIndex]["name"]),
         backgroundColor: const Color.fromRGBO(111, 31, 40, 1),
+        leading: null,
         actions: [
           IconButton(
             onPressed: ( ) {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>const SearchPage()));
+              showSearch(context: context, delegate: DataSearch());
 
             },
             icon: const Icon(

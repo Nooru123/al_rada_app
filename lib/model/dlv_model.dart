@@ -5,13 +5,15 @@ class DlvDtl {
   String userEmail;
   String? userNumber;
   String? userAddress;
+  String ?imageUrl;
   DlvDtl ({
     required this.userId,
     required this.userName,
     required this.userEmail,
+    this.imageUrl,
 });
   factory DlvDtl.fromMap(Map<String,dynamic>map){
-    return DlvDtl(userId: map["userId"], userName: map["userName"], userEmail: map["userEmail"]);
+    return DlvDtl(userId: map["userId"], userName: map["userName"], userEmail: map["userEmail"],imageUrl: map['imageUrl'],);
   }
   Map<String,dynamic>toMap(){
     return {
@@ -20,6 +22,7 @@ class DlvDtl {
       "userEmail":userEmail,
       "userNumber":userNumber,
       "userAddress":userAddress,
+      "imageUrl":imageUrl,
 
     };
 

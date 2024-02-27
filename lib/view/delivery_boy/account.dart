@@ -16,7 +16,7 @@ class Account extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    final imageController = Provider.of<AccountPro>(
+    final imageController = Provider.of<BackendProvider>(
       context,
     );
     return Scaffold(
@@ -77,7 +77,7 @@ class Account extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.center,
-                child: Consumer<AccountPro>(builder: (context, value, _) {
+                child: Consumer<BackendProvider>(builder: (context, value, _) {
                   return Container(
                       height: 150,
                       width: 150,

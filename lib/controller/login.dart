@@ -41,12 +41,12 @@ class SplashPro with ChangeNotifier{
 
 
 
-  var name=TextEditingController();
-  var email1=TextEditingController();
-  var email=TextEditingController();
-  var pass=TextEditingController();
-  var pass1=TextEditingController();
-  var conPass=TextEditingController();
+  TextEditingController name=TextEditingController();
+  TextEditingController email1=TextEditingController();
+  TextEditingController email=TextEditingController();
+  TextEditingController pass=TextEditingController();
+  TextEditingController pass1=TextEditingController();
+  TextEditingController conPass=TextEditingController();
   dynamic  userType;
   Future<void> movingToSignUp (context)async{
     var sharedPref= await SharedPreferences.getInstance();
@@ -105,7 +105,7 @@ class SplashPro with ChangeNotifier{
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please verified")));
 
         }else{
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>DlvHome()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const DlvHome()));
         }
 
       }

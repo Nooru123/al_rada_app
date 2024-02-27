@@ -81,3 +81,56 @@ void showAlertDialog(context) {
     },
   ).show();
 }
+class DataSearch extends SearchDelegate<String>{
+  final foods =[
+    "French Fries",
+    "Coleslaw",
+    "Hummus",
+    "Ketchup",
+    "Bun",
+    "Kuboos",
+    "Garlic Bread",
+    "Butter Bread",
+    "Coca Cola",
+    "Mockup Can",
+    "Lemonade",
+    "Xtreme Soda",
+  ];
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+   return[ IconButton(onPressed: (){
+     query ="";
+   }, icon: const Icon(Icons.clear))];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+   return IconButton(onPressed: (){
+     close(context, "");
+   }, icon: AnimatedIcon(icon: AnimatedIcons.menu_arrow, progress: transitionAnimation));
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final suggestionList =query.isEmpty ? [] : foods.where((element)=> element.startsWith(query)).toList();
+
+    return ListView.builder(itemBuilder: (context,index)=>ListTile(
+      title:
+        RichText(text: TextSpan(text: suggestionList[index].substring(0, query.length),
+        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: MediaQuery.of(context).size.height/38),
+          children: [
+            TextSpan(text: suggestionList[index].substring(query.length),style: TextStyle(color: Colors.grey,fontSize:MediaQuery.of(context).size.height/38 ))
+          ]
+        ),)
+    ),
+    itemCount:  suggestionList.length,
+    );
+  }
+
+}

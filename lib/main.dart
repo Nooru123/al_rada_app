@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<PaymentPro>(create: (_) => PaymentPro()),
         ChangeNotifierProvider<DlvPro>(create: (_) => DlvPro()),
         ChangeNotifierProvider<CtmPro>(create: (_) => CtmPro()),
-        ChangeNotifierProvider<AccountPro>(create: (_) => AccountPro()),
         ChangeNotifierProvider<HomePro>(create: (_) => HomePro()),
       ],
       child: MaterialApp(
@@ -59,7 +58,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const Location(),
+        home: const CtmHome(),
         debugShowCheckedModeBanner: false,
       ),
     );
