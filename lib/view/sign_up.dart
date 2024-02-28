@@ -9,6 +9,7 @@ class SignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(usertype);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     final goPro = Provider.of<SplashPro>(context, listen: false);
@@ -22,7 +23,7 @@ class SignUp extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: width / 30),
           child: SingleChildScrollView(
             child: Form(
-              key: goPro.formKey,
+              key: AllKeys.formKey1,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

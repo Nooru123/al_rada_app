@@ -32,18 +32,23 @@ class Account2 extends StatelessWidget {
             ),
             Padding(
               padding:  EdgeInsets.symmetric(horizontal: width/3),
-              child: Consumer<BackendProvider>(
-                builder: (context,value,child) {
-                  return Container(
-                    height: height/8,
-                    width: width/4,
+              child: Container(
+                height: height/8,
+                width: width/4,
 
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      image: DecorationImage(image: NetworkImage(fetchData.userModel.imageUrl!))
-                    ),
-                  );
-                }
+                decoration: BoxDecoration(
+
+                  borderRadius: BorderRadius.circular(100),
+                  image:fetchData.image1 != null && fetchData.image1!.path.isNotEmpty
+                      ?DecorationImage(
+
+                      image: NetworkImage(fetchData.userModel.imageUrl!))
+
+                      :const DecorationImage(
+                    fit: BoxFit.fill,
+
+              image: AssetImage("assets/avatar.jpg"))
+      ),
               ),
             ),
             SizedBox(

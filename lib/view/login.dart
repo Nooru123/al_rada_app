@@ -25,7 +25,7 @@ class Login extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: width / 30),
           child: Form(
-            key: goPro.formKey2,
+            key: AllKeys.formKey2,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

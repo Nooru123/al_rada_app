@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../model/dlv_model.dart';
@@ -13,9 +12,13 @@ class BackendProvider with ChangeNotifier {
   File? image1;
   final ImagePicker picker = ImagePicker();
   TextEditingController fetchName = TextEditingController();
+  TextEditingController fetchName2 = TextEditingController();
   TextEditingController fetchEmil = TextEditingController();
+  TextEditingController fetchEmil2 = TextEditingController();
   TextEditingController fetchPass = TextEditingController();
+  TextEditingController fetchPass2 = TextEditingController();
   TextEditingController fetchMobile = TextEditingController();
+  TextEditingController fetchMobile2 = TextEditingController();
   TextEditingController fetchAddress = TextEditingController();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -32,7 +35,7 @@ class BackendProvider with ChangeNotifier {
 
     notifyListeners();
   }
-  Future<void>fetchUserData()async{
+  Future<void>fetchUserData(String userName,String userEmail)async{
     try{
       await firebaseFirestore.collection('users').doc(firebaseAuth.currentUser!.uid).get().then((DocumentSnapshot snapshot) {
         _userModel = DlvDtl(userId: snapshot['userId'], userName: snapshot['userName'], userEmail: snapshot['userEmail']);
@@ -56,6 +59,27 @@ class BackendProvider with ChangeNotifier {
         "Password": password,
         "Email": userEmail,
         "Address": address,
+        "MobileNumber": mobileNumber, // Save image URL to Firestore
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Profile updated successfully")));
+    } catch (e) {
+      print('Error editing profile: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Failed to update profile")));
+    }
+  }
+  Future<void> editProfile2(String userName, String password, String userEmail, File image,  String mobileNumber, context) async {
+    try {
+      String imageUrl = await uploadImage(image); // Upload image to Firebase Storage
+      await firebaseFirestore
+          .collection("users")
+          .doc(firebaseAuth.currentUser!.uid)
+          .update({
+        "userName": userName,
+        "Password": password,
+        "Email": userEmail,
+
         "MobileNumber": mobileNumber, // Save image URL to Firestore
       });
       ScaffoldMessenger.of(context).showSnackBar(

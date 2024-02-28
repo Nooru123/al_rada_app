@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../../controller/accountpro.dart';
 import '../../controller/dlv_home_controller.dart';
+import '../../controller/login.dart';
 import '../delivery_boy/notifications.dart';
 
 class Profile extends StatelessWidget {
@@ -22,6 +23,7 @@ class Profile extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     final fetchData = Provider.of<BackendProvider>(context);
+    fetchData.fetchUserData( fetchData.fetchName.text, fetchData.fetchEmil.text);
 
 
 
@@ -75,207 +77,207 @@ class Profile extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: width / 30),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: height / 18,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Consumer<BackendProvider>(builder: (context, value, _) {
-                  return Container(
-                      height: 150,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        border: Border.all(color: Colors.black),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          value.getImage();
-                        },
-                        child: Container(
-                          height: 150,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: fetchData.image1 != null && fetchData.image1!.path.isNotEmpty
-                                ? DecorationImage(
-                              fit: BoxFit.cover,
-                              image: FileImage(File(fetchData.image1!.path)),
-                            )
-                                : DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(fetchData.userModel.imageUrl!),
+          child: Form(
+            key: AllKeys.formKey4,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: height / 18,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Consumer<BackendProvider>(builder: (context, value, child) {
+                    return Container(
+                        height: 150,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(color: Colors.black),
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            value.getImage();
+                          },
+                          child: Container(
+                            height: 150,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image:fetchData.image1 != null && fetchData.image1!.path.isNotEmpty
+                                    ?NetworkImage(fetchData.userModel.imageUrl!) as ImageProvider :const AssetImage('assets/avatar.jpg'),
+                              )
+
                             ),
                           ),
-                        ),
-                      )
+                        )
 
-                      );
-                }),
-              ),
-              SizedBox(
-                height: height / 18,
-              ),
-              const Text(
-                "Name",
-                style: TextStyle(fontSize: 22),
-              ),
-              Container(
-                padding: EdgeInsets.only(left: width / 30),
-                alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(12),
+                        );
+                  }),
                 ),
-                child: TextFormField(
-                  controller: fetchData.fetchName,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Enter your Name",
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please Enter Your Name";
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {},
+                SizedBox(
+                  height: height / 18,
                 ),
-              ),
-              const Text(
-                "Email",
-                style: TextStyle(fontSize: 22),
-              ),
-              Container(
-                padding: EdgeInsets.only(left: width / 30),
-                alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(12),
+                const Text(
+                  "Name",
+                  style: TextStyle(fontSize: 22),
                 ),
-                child: TextFormField(
-                  controller: fetchData.fetchEmil,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Enter your Email",
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please Enter Your Email";
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {},
-                ),
-              ),
-              const Text(
-                "Password",
-                style: TextStyle(fontSize: 22),
-              ),
-              Container(
-                padding: EdgeInsets.only(left: width / 30),
-                alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: TextFormField(
-                  controller: fetchData.fetchPass,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Enter your Password",
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please Enter Your Password";
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {},
-                ),
-              ),
-              const Text(
-                "Mobile number",
-                style: TextStyle(fontSize: 22),
-              ),
-              Container(
-                padding: EdgeInsets.only(left: width / 30),
-                alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: TextFormField(
-                  controller: fetchData.fetchMobile,
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "Enter your Mobile number",
-                  ),
-
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please Enter Your Mobile number";
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {},
-                ),
-              ),
-              const Text(
-                "Address",
-                style: TextStyle(fontSize: 22),
-              ),
-              TextFormField(
-                controller: fetchData.fetchAddress,
-                decoration: const InputDecoration(
-                  border:OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
-                  hintText: "Enter your Address",
-                ),
-                maxLines: 5,
-                minLines: 5,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "get your current location";
-                  }
-                  return null;
-                },
-                onSaved: (value) {},
-              ),
-              SizedBox(
-                height: height / 28,
-              ),
-              InkWell(
-                onTap: ()async{
-                  if (
-                  fetchData.image1!=null
-                  ){
-                    String imageUrl = await fetchData.uploadImage(fetchData.image1! as File);
-                    if(imageUrl.isNotEmpty){
-                      fetchData.editProfile(fetchData.fetchName.text, fetchData.fetchPass.text, fetchData.fetchEmil.text, fetchData.image1! as File, fetchData.fetchAddress.text, fetchData.fetchMobile.text, context);
-
-                    }
-
-                  }
-
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  height: height / 16,
-                  width: width,
+                Container(
+                  padding: EdgeInsets.only(left: width / 30),
+                  alignment: Alignment.centerLeft,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.white),
-                      color: Colors.black),
-                  child: const Text(
-                    "Update",
-                    style: TextStyle(color: Colors.white, fontSize: 22),
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextFormField(
+                    controller: fetchData.fetchName,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Enter your Name",
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please Enter Your Name";
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {},
                   ),
                 ),
-              ),
-            ],
+                const Text(
+                  "Email",
+                  style: TextStyle(fontSize: 22),
+                ),
+                Container(
+                  padding: EdgeInsets.only(left: width / 30),
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextFormField(
+                    controller: fetchData.fetchEmil,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Enter your Email",
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please Enter Your Email";
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {},
+                  ),
+                ),
+                const Text(
+                  "Password",
+                  style: TextStyle(fontSize: 22),
+                ),
+                Container(
+                  padding: EdgeInsets.only(left: width / 30),
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextFormField(
+                    controller: fetchData.fetchPass,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Enter your Password",
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please Enter Your Password";
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {},
+                  ),
+                ),
+                const Text(
+                  "Mobile number",
+                  style: TextStyle(fontSize: 22),
+                ),
+                Container(
+                  padding: EdgeInsets.only(left: width / 30),
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextFormField(
+                    controller: fetchData.fetchMobile,
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Enter your Mobile number",
+                    ),
+
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please Enter Your Mobile number";
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {},
+                  ),
+                ),
+                const Text(
+                  "Address",
+                  style: TextStyle(fontSize: 22),
+                ),
+                TextFormField(
+                  controller: fetchData.fetchAddress,
+                  decoration: const InputDecoration(
+                    border:OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
+                    hintText: "Enter your Address",
+                  ),
+                  maxLines: 5,
+                  minLines: 5,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "get your current location";
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {},
+                ),
+                SizedBox(
+                  height: height / 28,
+                ),
+                InkWell(
+                  onTap: ()async{
+                    if (
+                    fetchData.image1!=null
+                    ){
+                      String imageUrl = await fetchData.uploadImage(fetchData.image1! as File);
+                      if(imageUrl.isNotEmpty){
+                        fetchData.editProfile(fetchData.fetchName.text, fetchData.fetchPass.text, fetchData.fetchEmil.text, fetchData.image1! as File, fetchData.fetchAddress.text, fetchData.fetchMobile.text, context);
+
+                      }
+
+                    }
+
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: height / 16,
+                    width: width,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: Colors.white),
+                        color: Colors.black),
+                    child: const Text(
+                      "Update",
+                      style: TextStyle(color: Colors.white, fontSize: 22),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

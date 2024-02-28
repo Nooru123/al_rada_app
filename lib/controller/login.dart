@@ -20,7 +20,13 @@ import '../view/sign_up.dart';
 import '../view/signin_signup.dart';
 
 
+class AllKeys{
+  static final formKey2 = GlobalKey<FormState>();
+  static final  formKey1 = GlobalKey<FormState>();
+  static final  formKey3 = GlobalKey<FormState>();
+  static final  formKey4 = GlobalKey<FormState>();
 
+}
 
 
 class SplashPro with ChangeNotifier{
@@ -32,9 +38,8 @@ class SplashPro with ChangeNotifier{
   DlvDtl get userModel => _userModel!;
   // var value;
   static const String keyLogin ='login';
-  static  String value ='';
-  GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  static  String value ='Customer';
+
 
 
 

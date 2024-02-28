@@ -5,7 +5,7 @@ class DlvDtl {
   String userEmail;
   String? userNumber;
   String? userAddress;
-  String ?imageUrl;
+  String ? imageUrl;
   DlvDtl ({
     required this.userId,
     required this.userName,

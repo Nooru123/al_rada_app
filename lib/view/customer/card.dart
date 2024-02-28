@@ -1,10 +1,10 @@
 import 'package:ai_rida/view/customer/payment.dart';
-import 'package:ai_rida/view/customer/search_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../controller/ctm_Controller.dart';
 import 'ctm_home.dart';
 
 class CardPage extends StatelessWidget {
@@ -74,7 +74,7 @@ class CardPage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: ( ) {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>const SearchPage()));
+              showSearch(context: context, delegate: DataSearch());
 
             },
             icon: const Icon(

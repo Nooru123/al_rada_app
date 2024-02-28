@@ -33,6 +33,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<SplashPro>(create: (_) => SplashPro()),
         ChangeNotifierProvider<PaymentPro>(create: (_) => PaymentPro()),
+        ChangeNotifierProvider<BackendProvider>(create: (_) => BackendProvider()),
         ChangeNotifierProvider<DlvPro>(create: (_) => DlvPro()),
         ChangeNotifierProvider<CtmPro>(create: (_) => CtmPro()),
         ChangeNotifierProvider<HomePro>(create: (_) => HomePro()),
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const CtmHome(),
+        home: const SplashScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );
