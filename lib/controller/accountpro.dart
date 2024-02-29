@@ -35,10 +35,10 @@ class BackendProvider with ChangeNotifier {
 
     notifyListeners();
   }
-  Future<void>fetchUserData(String userName,String userEmail)async{
+  Future<void>fetchUserDataDlvDtl()async{
     try{
-      await firebaseFirestore.collection('users').doc(firebaseAuth.currentUser!.uid).get().then((DocumentSnapshot snapshot) {
-        _userModel = DlvDtl(userId: snapshot['userId'], userName: snapshot['userName'], userEmail: snapshot['userEmail']);
+      await firebaseFirestore.collection('Delivery boy').doc(firebaseAuth.currentUser!.uid).get().then((DocumentSnapshot snapshot) {
+        _userModel = DlvDtl(userId: snapshot['userId'], userName: snapshot['userName'], userEmail: snapshot['userEmail'], userNumber:  snapshot['userNumber']);
         _uid =userModel.userId;
       });
 
@@ -48,11 +48,24 @@ class BackendProvider with ChangeNotifier {
 
     }
   }
-  Future<void> editProfile(String userName, String password, String userEmail, File image, String address, String mobileNumber, context) async {
+  Future<void>fetchUserDataCtmDtl()async{
+    try{
+      await firebaseFirestore.collection('Customer').doc(firebaseAuth.currentUser!.uid).get().then((DocumentSnapshot snapshot) {
+        _userModel = CtmDtl(userId: snapshot['userId'], userName: snapshot['userName'], userEmail: snapshot['userEmail'], userNumber: snapshot['userNumber'], userAddress: snapshot['userAddress']) as DlvDtl?;
+        _uid =userModel.userId;
+      });
+
+    }
+    catch(e){
+      print(e);
+
+    }
+  }
+  Future<void> editProfile2(String userName, String password, String userEmail, File image, String address, String mobileNumber, context) async {
     try {
       String imageUrl = await uploadImage(image); // Upload image to Firebase Storage
       await firebaseFirestore
-          .collection("users")
+          .collection("Customer")
           .doc(firebaseAuth.currentUser!.uid)
           .update({
         "userName": userName,
@@ -69,11 +82,11 @@ class BackendProvider with ChangeNotifier {
           const SnackBar(content: Text("Failed to update profile")));
     }
   }
-  Future<void> editProfile2(String userName, String password, String userEmail, File image,  String mobileNumber, context) async {
+  Future<void> editProfile(String userName, String password, String userEmail, File image,  String mobileNumber, context) async {
     try {
       String imageUrl = await uploadImage(image); // Upload image to Firebase Storage
       await firebaseFirestore
-          .collection("users")
+          .collection("Delivery boy")
           .doc(firebaseAuth.currentUser!.uid)
           .update({
         "userName": userName,
@@ -101,7 +114,30 @@ class BackendProvider with ChangeNotifier {
       String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
       print(downloadUrl);
       await firebaseFirestore
-          .collection("users")
+          .collection("Delivery boy")
+          .doc(firebaseAuth.currentUser!.uid)
+          .update({
+
+        'imageUrl': downloadUrl, // Save image URL to Firestore
+      });
+      return downloadUrl;
+    } catch (e) {
+      print('error uploading image:$e');
+      return '';
+    }
+  }
+  Future<String> uploadImage2( image) async {
+    try {
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference reference =
+      FirebaseStorage.instance.ref().child('images/$fileName');
+      SettableMetadata metadata=SettableMetadata(contentType: "image/jpeg");
+      UploadTask uploadTask = reference.putFile(image,metadata );
+      TaskSnapshot storageTaskSnapshot = await uploadTask;
+      String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+      print(downloadUrl);
+      await firebaseFirestore
+          .collection("Customer")
           .doc(firebaseAuth.currentUser!.uid)
           .update({
 

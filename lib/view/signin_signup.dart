@@ -86,20 +86,20 @@ class SignInSignUp extends StatelessWidget {
                   PopupMenuItem(
 
                       height: 25,
-                      // onTap: () {
-                      //   value.userType.value='Customer';
-                      //   print(value.userType.value);
-                      // },
+                      onTap: () {
+                        value.userType.value=='Customer';
+                        print(value.userType.value);
+                      },
                       value: 0,
                       child: const Text("Customer")),
                   PopupMenuItem(
                       height: 25,
 
-                      // onTap: () {
-                      //   value.userType.value='Delivery boy';
-                      //   print(value.userType.value);
-                      //
-                      // },
+                      onTap: () {
+                        value.userType.value=='Delivery boy';
+                        print(value.userType.value);
+
+                      },
                       value: 1,
                       child: const Text("Delivery boy")),
                 ],

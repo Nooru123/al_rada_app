@@ -161,7 +161,13 @@ class SignUp extends StatelessWidget {
                           goPro.name.text.isNotEmpty &&
                           goPro.pass.text.isNotEmpty &&
                           goPro.conPass.text.isNotEmpty) {
-                        goPro.signUp(goPro.name.text, goPro.pass.text, goPro.email.text, context,usertype);
+                        usertype!='Customer'?
+                          goPro.signUp2(goPro.name.text, goPro.pass.text, goPro.email.text, context,usertype):
+
+
+                          goPro.signUp(goPro.name.text, goPro.pass.text, goPro.email.text, context,usertype);
+
+
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

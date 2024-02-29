@@ -36,16 +36,20 @@ class SplashPro with ChangeNotifier{
 
   DlvDtl? _userModel;
   DlvDtl get userModel => _userModel!;
+  CtmDtl? _userModel2;
+  CtmDtl get userModel2 => _userModel2!;
   // var value;
   static const String keyLogin ='login';
   static  String value ='Customer';
+  ////////////////////////////////////////////////////////////////////////////////////////////////////
+  void saveUserData(String userId, Map<String, dynamic> userData) {
+    FirebaseFirestore.instance.collection('users').doc(userId).set(userData);
+  }
 
-
-
-
-
-
-
+  void saveAdminData(String adminId, Map<String, dynamic> adminData) {
+    FirebaseFirestore.instance.collection('admins').doc(adminId).set(adminData);
+  }
+  ////////////////////////////////////////////////////////////////////////
   TextEditingController name=TextEditingController();
   TextEditingController email1=TextEditingController();
   TextEditingController email=TextEditingController();
@@ -62,7 +66,6 @@ class SplashPro with ChangeNotifier{
   }
 
   Future<void> movingToLogin (context)async{
-
     var sharedPref= await SharedPreferences.getInstance();
     userType = sharedPref.getString(value);
     Navigator.push(context, MaterialPageRoute(builder: (context)=>Login(usertype: userType.toString(),)));
@@ -77,7 +80,37 @@ class SplashPro with ChangeNotifier{
     await userDoc
         .set(_userModel!.toMap());
   }
+  Future<void> saveUser2( String username, String userEmail,String collectionName) async {
+    final userDoc=  firebaseFirestore
+        .collection(collectionName)
+        .doc();
+    _userModel2 = CtmDtl(userId: userDoc.id, userEmail: userEmail, userName: username);
+    await userDoc
+        .set(_userModel!.toMap());
+  }
   Future<void>signUp(String userName,String userPassword,String userEmail,context,String collectionName, )async{
+    try{
+      var sharedPref = await SharedPreferences.getInstance();
+      sharedPref.setBool(keyLogin,true);
+      UserCredential userCredential =await firebaseAuth.createUserWithEmailAndPassword(email: userEmail, password: userPassword);
+      final user =firebaseAuth.currentUser;
+      user!.sendEmailVerification();
+      await saveUser2(userName, userEmail,collectionName);
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Success")));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Login(usertype: userType.toString(),)));
+      notifyListeners();
+
+
+    }catch(e){
+      print(e);
+    }
+    // var sharedPref = await SharedPreferences.getInstance();
+    // sharedPref.setBool(keylogin,true);
+    // backendServices.signUp(name.text, pass.text, email.text, context,collectionName);
+    // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LoginPage2(usertype: userType.toString(),)));
+    // notifyListeners();
+  }
+  Future<void>signUp2(String userName,String userPassword,String userEmail,context,String collectionName, )async{
     try{
       var sharedPref = await SharedPreferences.getInstance();
       sharedPref.setBool(keyLogin,true);
@@ -110,7 +143,12 @@ class SplashPro with ChangeNotifier{
           ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please verified")));
 
         }else{
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const DlvHome()));
+          if(value=="Customer"){
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const DlvHome()));
+          }else{
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const CtmHome()));
+
+          }
         }
 
       }
@@ -125,29 +163,6 @@ class SplashPro with ChangeNotifier{
     notifyListeners();
   }
 
-  // void removeValues() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //
-  //   prefs.remove(keylogin);
-  //
-  //
-  // }
-
-  // void going (context)async{
-  //
-  //
-  //   var sharedPref = await SharedPreferences.getInstance();
-  //
-  //   sharedPref.setString(SplashPro.self,"costumer");
-  //   notifyListeners();
-  // }
-  // void went (context)async{
-  //
-  //
-  //   var sharedPref = await SharedPreferences.getInstance();
-  //   sharedPref.setString(SplashPro.self,"delivery_boy");
-  //   notifyListeners();
-  // }
   Future<void> forgotPassword(String userEmail,context)async{
     try{
       await firebaseAuth.sendPasswordResetEmail(email: userEmail);
@@ -172,7 +187,7 @@ class SplashPro with ChangeNotifier{
 
       if (isLoggedIn != null) {
         if (isLoggedIn) {
-          if (value=="costumer"){
+          if (value=="Customer"){
             Navigator.pushReplacement(context ,
                 MaterialPageRoute(builder: (context) =>const CtmHome()));
           }else{
@@ -186,7 +201,7 @@ class SplashPro with ChangeNotifier{
         }
       } else {
         Navigator.pushReplacement(context  ,
-            MaterialPageRoute(builder: (context) =>const SignInSignUp()));
+            MaterialPageRoute(builder: (context) => const SignInSignUp()));
       }
       notifyListeners();
     }
